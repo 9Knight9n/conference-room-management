@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "c71dd5a0-6282-4a6a-8e1b-dcaad070c816",
+		"name": "admin_panel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get users list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "token 6101c7883cc82fb7dd7bedbe9dc0e2b78930f6bdae54212a581f930f5b5c8b47",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://{{server_ip}}:8000/api/crm/admin/user/",
+					"protocol": "http",
+					"host": [
+						"{{server_ip}}"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"crm",
+						"admin",
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update permission",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "token 6101c7883cc82fb7dd7bedbe9dc0e2b78930f6bdae54212a581f930f5b5c8b47",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://{{server_ip}}:8000/api/crm/admin/user/",
+					"protocol": "http",
+					"host": [
+						"{{server_ip}}"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"crm",
+						"admin",
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server_ip",
+			"value": "localhost",
+			"type": "default"
+		}
+	]
+}
