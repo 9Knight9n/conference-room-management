@@ -11,7 +11,3 @@ class HasAccessToCRM(BasePermission):
     def has_permission(self, request, view):
         return User.objects.get(user=request.user).has_access_to_crm_panel()
 
-
-class HasAccessToReserve(BasePermission):
-    def has_permission(self, request, view):
-        return not User.objects.get(user=request.user).has_access_to_crm_panel()

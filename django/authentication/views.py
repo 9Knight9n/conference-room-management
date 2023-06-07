@@ -25,7 +25,6 @@ class LoginView(KnoxLoginView):
         response.data['id'] = user.__dict__['id']
         has_access_to_crm_panel = user.has_access_to_crm_panel()
         response.data['has_access_to_crm_panel'] = has_access_to_crm_panel
-        response.data['has_access_to_reserve_panel'] = not has_access_to_crm_panel
         response.data['has_access_to_admin_panel'] = user.has_access_to_admin_panel()
         del response.data['expiry']
         return response
