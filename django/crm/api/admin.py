@@ -1,5 +1,4 @@
 from django.db.models import F
-from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -20,7 +19,7 @@ class UserView(APIView):
 
     def put(self, request, format=None):
         serializer = AdminPermissionSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True,)
+        serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         user.is_manager = serializer.validated_data['is_manager']
         user.save()

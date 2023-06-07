@@ -13,10 +13,6 @@ class AdminPermissionSerializer(serializers.Serializer):
         user_id = attrs.get('user_id')
         is_manager = attrs.get('is_manager')
 
-        # if not bool(user_id and is_manager):
-        #     msg = 'Must include both "user_id" and "is_manager".'
-        #     raise serializers.ValidationError(msg, code=status.HTTP_400_BAD_REQUEST)
-
         user = User.objects.filter(id=user_id)
         if len(user) != 1:
             raise serializers.ValidationError('Invalid user_id.', code=status.HTTP_406_NOT_ACCEPTABLE)
@@ -32,7 +28,8 @@ class AdminPermissionSerializer(serializers.Serializer):
 
 
 class MeetingSerializer(serializers.ModelSerializer):
+    possibility_check = serializers.ChoiceField(("set", "unset"), )
+
     class Meta:
         model = Meeting
-        fields = ['title', 'number_of_participant', 'proposed_start_time',
-                  'proposed_end_time', 'duration', 'proposed_date']
+        exclude = ['user']
