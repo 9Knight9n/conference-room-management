@@ -15,7 +15,7 @@ class DjangoUserSerializer(serializers.ModelSerializer):
         return DjangoUser.objects.create_user(**validated_data)
 
 
-class AuthSerializer(serializers.Serializer, ABC):
+class AuthSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(
         style={'input_type': 'password'},

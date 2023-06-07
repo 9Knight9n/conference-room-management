@@ -2,7 +2,7 @@ from django.contrib.auth import login
 from rest_framework import generics, permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
-from .serializers import DjangoUserSerializer, AuthSerializer, UserSerializer
+from .serializers import AuthSerializer, UserSerializer
 from .models import User
 
 
@@ -23,7 +23,9 @@ class LoginView(KnoxLoginView):
         user = User.objects.get(user=django_user)
         response.data['username'] = django_user.username
         response.data['id'] = user.__dict__['id']
-        response.data['has_access_to_crm_panel'] = user.has_access_to_crm_panel()
+        has_access_to_crm_panel = user.has_access_to_crm_panel()
+        response.data['has_access_to_crm_panel'] = has_access_to_crm_panel
+        response.data['has_access_to_reserve_panel'] = not has_access_to_crm_panel
         response.data['has_access_to_admin_panel'] = user.has_access_to_admin_panel()
         del response.data['expiry']
         return response
