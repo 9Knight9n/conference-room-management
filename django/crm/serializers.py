@@ -2,6 +2,8 @@ from rest_framework import serializers
 from authentication.models import User
 from rest_framework import status
 
+from .models import Meeting
+
 
 class AdminPermissionSerializer(serializers.Serializer):
     user_id = serializers.UUIDField()
@@ -27,3 +29,10 @@ class AdminPermissionSerializer(serializers.Serializer):
         attrs['user'] = user
         attrs['is_manager'] = is_manager == 'set'
         return attrs
+
+
+class MeetingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Meeting
+        fields = ['title', 'number_of_participant', 'proposed_start_time',
+                  'proposed_end_time', 'duration', 'proposed_date']
