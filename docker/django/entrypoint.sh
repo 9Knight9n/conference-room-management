@@ -11,7 +11,7 @@ echo 'PostgreSQL started'
 echo 'Running migrations...'
 python manage.py makemigrations
 python manage.py makemigrations authentication
-python manage.py makemigrations subscription
+python manage.py makemigrations crm
 python manage.py migrate
 
 echo 'Checking for admin account...'
