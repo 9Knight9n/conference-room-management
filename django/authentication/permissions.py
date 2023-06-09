@@ -7,7 +7,7 @@ class HasAccessToAdmin(BasePermission):
         return User.objects.get(user=request.user).has_access_to_admin_panel()
 
 
-class HasAccessToCRM(BasePermission):
+class HasAccessToManager(BasePermission):
     def has_permission(self, request, view):
         return User.objects.get(user=request.user).has_access_to_crm_panel()
 

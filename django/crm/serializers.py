@@ -1,8 +1,7 @@
 from rest_framework import serializers
 from authentication.models import User
 from rest_framework import status
-
-from .models import Meeting
+from .models import Meeting, Room
 
 
 class AdminPermissionSerializer(serializers.Serializer):
@@ -33,3 +32,9 @@ class MeetingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meeting
         exclude = ['user']
+
+class RoomSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Room
+        fields = '__all__'
