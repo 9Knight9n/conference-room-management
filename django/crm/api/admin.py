@@ -23,4 +23,4 @@ class UserView(APIView):
         user = serializer.validated_data['user']
         user.is_manager = serializer.validated_data['is_manager']
         user.save()
-        return Response({'message': 'User permission changed successfully.'})
+        return Response({'message': 'User permission changed successfully.', 'is_manager': user.is_manager})
