@@ -17,7 +17,7 @@ function Home (props) {
             label: 'Admin Panel',
             children: <Admin notif={props.notif} token={props.token}/>,
         }]:[],
-        ...props.permission['has_access_to_admin_panel']?[{
+        ...props.permission['has_access_to_crm_panel']?[{
             key: '2',
             label: 'Manager Panel',
             children: <Manager token={props.token} notif={props.notif}/>,

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Divider, Input, Select, Popconfirm } from 'antd';
+import { Calendar, Button, Divider, Input, Popconfirm, Timeline } from 'antd';
 import {baseURL} from "../../../components/config";
+import Schedule from "./Schedule";
 
 
 function Public (props) {
 
-    const [data, setData] = useState([]);
-    const [room, setRoom] = useState([]);
     const [addRequestInProcess, setAddRequestInProcess] = useState(false);
     const [addRequestLoading, setAddRequestLoading] = useState(false);
     const [title, setTitle] = useState(null);
@@ -16,16 +15,9 @@ function Public (props) {
     const [endTime, setEndTime] = useState(null);
     const [date, setDate] = useState(null);
     const [confirm, setConfirm] = useState(false);
+    const [selectedDate, setSelectedDate] = useState('');
+    const [meeting, setMeeting] = useState([]);
 
-
-    useEffect(() => {
-        fetchData()
-    }, []);
-
-
-    function fetchData() {
-
-    }
 
 
     function addRequest(possibilityCheck) {
@@ -92,6 +84,25 @@ function Public (props) {
             }).catch(error => console.log('error', error)).finally(()=>{setAddRequestLoading(false)})
     }
 
+
+    function onSelect(value) {
+        var myHeaders = new Headers();
+        myHeaders.append("authorization", "token " + props.token);
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        fetch(baseURL + "/api/crm/public/meeting/?date="+value.format('YYYY-MM-DD'), requestOptions)
+            .then(response => response.text())
+            .then(response => {
+                let temp = JSON.parse(response);
+                setMeeting(temp.meeting)
+            }).catch(error => console.log('error', error));
+    }
+
     return (
         <>
             <div style={{display:"flex",justifyContent:"space-between"}}>
@@ -121,6 +132,15 @@ function Public (props) {
 
             </div>
             <Divider dashed />
+            <div style={{display:"flex", width:'100%', justifyContent:"center"}}>
+                <Calendar style={{width:'400px'}} fullscreen={false} onSelect={onSelect}/>
+                <Divider type="vertical" style={{height:'100%'}}/>
+                <Divider type="vertical" style={{height:'100%'}}/>
+                <Divider type="vertical" style={{height:'100%'}}/>
+                <Divider type="vertical" style={{height:'100%'}}/>
+                <Divider type="vertical" style={{height:'100%'}}/>
+                {Object.keys(meeting).map((item) => (<Schedule title={item} meeting={meeting[item]}/>))}
+            </div>
         </>
     );
 };
