@@ -78,8 +78,8 @@ function Manager (props) {
         },
         {
             title: 'username',
-            dataIndex: 'requester_username',
-            key: 'requester_username',
+            dataIndex: 'username',
+            key: 'username',
         },
         {
             title: 'Participants',
