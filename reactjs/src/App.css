@@ -1,0 +1,23 @@
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+body,html {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.ant-pagination-options {
+  display: none;
+}
