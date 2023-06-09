@@ -34,22 +34,22 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
 
 
-#  reactjs:
-#    build:
-#      dockerfile: ./docker/reactjs/Dockerfile
-#    command: npm start
-##    command: serve -s build
-#    volumes:
-#      - ./reactjs:/code
-#      - /code/node_modules
-#    ports:
-#      - "${REACTJS_PORT}:3000"
-#    environment:
-#      - CHOKIDAR_USEPOLLING=true
-#      - NODE_ENV=${NODE_ENV}
-#      - WATCHPACK_POLLING=true
-#    depends_on:
-#      - django
+  reactjs:
+    build:
+      dockerfile: ./docker/reactjs/Dockerfile
+    command: npm start
+#    command: serve -s build
+    volumes:
+      - ./reactjs:/code
+      - /code/node_modules
+    ports:
+      - "${REACTJS_PORT}:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - NODE_ENV=${NODE_ENV}
+      - WATCHPACK_POLLING=true
+    depends_on:
+      - django
 
 
 volumes:
