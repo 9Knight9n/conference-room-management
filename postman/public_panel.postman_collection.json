@@ -1,0 +1,105 @@
+{
+	"info": {
+		"_postman_id": "08887fa7-0cd8-4774-81b2-0c0faf8ba348",
+		"name": "public_panel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get users list",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "token 6101c7883cc82fb7dd7bedbe9dc0e2b78930f6bdae54212a581f930f5b5c8b47",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "possibility_check",
+							"value": "set",
+							"type": "default"
+						},
+						{
+							"key": "title",
+							"value": "meeting 5",
+							"type": "default"
+						},
+						{
+							"key": "number_of_participant",
+							"value": "20",
+							"type": "default"
+						},
+						{
+							"key": "duration",
+							"value": "60",
+							"type": "default"
+						},
+						{
+							"key": "proposed_start_time",
+							"value": "12:00",
+							"type": "default"
+						},
+						{
+							"key": "proposed_end_time",
+							"value": "15:00",
+							"type": "default"
+						},
+						{
+							"key": "proposed_date",
+							"value": "2023-06-10",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{server_ip}}:8000/api/crm/public/meeting/",
+					"protocol": "http",
+					"host": [
+						"{{server_ip}}"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"crm",
+						"public",
+						"meeting",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server_ip",
+			"value": "localhost",
+			"type": "default"
+		}
+	]
+}
