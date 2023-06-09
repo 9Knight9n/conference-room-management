@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "19afd789-c062-4102-830a-ac9a7232bb30",
+		"name": "manager_panel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create room",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "token 6101c7883cc82fb7dd7bedbe9dc0e2b78930f6bdae54212a581f930f5b5c8b47",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "room 3",
+							"type": "default"
+						},
+						{
+							"key": "capacity",
+							"value": "100",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{server_ip}}:8000/api/crm/manager/room/",
+					"protocol": "http",
+					"host": [
+						"{{server_ip}}"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"crm",
+						"manager",
+						"room",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of rooms",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "token 6101c7883cc82fb7dd7bedbe9dc0e2b78930f6bdae54212a581f930f5b5c8b47",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://{{server_ip}}:8000/api/crm/manager/room/",
+					"protocol": "http",
+					"host": [
+						"{{server_ip}}"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"crm",
+						"manager",
+						"room",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of meeting",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "token 6101c7883cc82fb7dd7bedbe9dc0e2b78930f6bdae54212a581f930f5b5c8b47",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://{{server_ip}}:8000/api/crm/manager/meeting/",
+					"protocol": "http",
+					"host": [
+						"{{server_ip}}"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"crm",
+						"manager",
+						"meeting",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accept meeting",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "token 6101c7883cc82fb7dd7bedbe9dc0e2b78930f6bdae54212a581f930f5b5c8b47",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "start_time",
+							"value": "7:00",
+							"type": "default"
+						},
+						{
+							"key": "end_time",
+							"value": "10:00",
+							"type": "default"
+						},
+						{
+							"key": "date",
+							"value": "2023-06-12",
+							"type": "default"
+						},
+						{
+							"key": "meeting_id",
+							"value": "a0bf77ec-b0b1-41c3-8edb-c5e935d31279",
+							"type": "default"
+						},
+						{
+							"key": "room_id",
+							"value": "a06740cd-a77d-46a3-ab02-a28ee5a19dc0",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{server_ip}}:8000/api/crm/manager/meeting/",
+					"protocol": "http",
+					"host": [
+						"{{server_ip}}"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"crm",
+						"manager",
+						"meeting",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server_ip",
+			"value": "localhost",
+			"type": "default"
+		}
+	]
+}

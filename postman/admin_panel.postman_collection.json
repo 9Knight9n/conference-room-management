@@ -37,7 +37,7 @@
 		{
 			"name": "update permission",
 			"request": {
-				"method": "GET",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "authorization",
@@ -45,6 +45,21 @@
 						"type": "default"
 					}
 				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_id",
+							"value": "07e822af-ae60-408b-b31e-c0406045546b",
+							"type": "default"
+						},
+						{
+							"key": "is_manager",
+							"value": "unset",
+							"type": "default"
+						}
+					]
+				},
 				"url": {
 					"raw": "http://{{server_ip}}:8000/api/crm/admin/user/",
 					"protocol": "http",

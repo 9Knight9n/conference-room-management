@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "get users list",
+			"name": "Create pending meeting",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -26,27 +26,28 @@
 						},
 						{
 							"key": "title",
-							"value": "meeting 5",
+							"value": "meeting 6",
 							"type": "default"
 						},
 						{
 							"key": "number_of_participant",
-							"value": "20",
+							"value": "40",
 							"type": "default"
 						},
 						{
 							"key": "duration",
-							"value": "60",
-							"type": "default"
+							"value": "180",
+							"type": "default",
+							"disabled": true
 						},
 						{
 							"key": "proposed_start_time",
-							"value": "12:00",
+							"value": "7:00",
 							"type": "default"
 						},
 						{
 							"key": "proposed_end_time",
-							"value": "15:00",
+							"value": "10:00",
 							"type": "default"
 						},
 						{
@@ -69,6 +70,41 @@
 						"public",
 						"meeting",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get meeting",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "token 6101c7883cc82fb7dd7bedbe9dc0e2b78930f6bdae54212a581f930f5b5c8b47",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://{{server_ip}}:8000/api/crm/public/meeting/?date=2023-06-10",
+					"protocol": "http",
+					"host": [
+						"{{server_ip}}"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"crm",
+						"public",
+						"meeting",
+						""
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2023-06-10"
+						}
 					]
 				}
 			},
