@@ -108,7 +108,7 @@ function Manager (props) {
         },
         {
             title: 'Start',
-            dataIndex: 'start_time',
+            dataIndex: 'key',
             key: 'start_time',
             render: (_,record) => (
                 <Input
@@ -127,7 +127,7 @@ function Manager (props) {
         },
         {
             title: 'End',
-            dataIndex: 'end_time',
+            dataIndex: 'key',
             key: 'end_time',
             render: (_,record) => (
                 <Input
@@ -146,7 +146,7 @@ function Manager (props) {
         },
         {
             title: 'Date',
-            dataIndex: 'date',
+            dataIndex: 'key',
             key: 'date',
             render: (_,record) => (
                 <Input
@@ -165,7 +165,7 @@ function Manager (props) {
         },
         {
             title: 'Room',
-            dataIndex: 'room_id',
+            dataIndex: 'key',
             key: 'room',
             render: (_,record) => (
                 <Select
