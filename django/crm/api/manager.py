@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.db.models import F
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -17,4 +18,25 @@ class RoomView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'result': 'Room was created successfully.'},
+                        status=status.HTTP_201_CREATED)
+
+    def get(self, request, format=None):
+        rooms = list(Room.objects.filter().values())
+        return Response({'room': rooms},
+                        status=status.HTTP_201_CREATED)
+
+
+class MeetingView(APIView):
+    permission_classes = [IsAuthenticated, HasAccessToManager]
+
+    def put(self, request, format=None):
+        serializer = RoomSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'result': 'Room was created successfully.'},
+                        status=status.HTTP_201_CREATED)
+
+    def get(self, request, format=None):
+        meetings = list(Meeting.objects.filter(status="P").annotate(username=F('user__user__username')).values())
+        return Response({'meeting': meetings},
                         status=status.HTTP_201_CREATED)
