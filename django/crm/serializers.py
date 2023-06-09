@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from authentication.models import User
 from rest_framework import status
+
+from .config import EARLIEST_MEETING_START, LATEST_MEETING_END
 from .models import Meeting, Room
 from datetime import datetime
 
@@ -33,6 +35,28 @@ class MeetingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meeting
         exclude = ['user']
+        extra_kwargs = {'duration': {'required': False},'proposed_start_time': {'required': False},'proposed_end_time': {'required': False}}
+
+    def validate(self, attrs):
+        duration = attrs.get('duration')
+        proposed_start_time = attrs.get('proposed_start_time')
+        proposed_end_time = attrs.get('proposed_end_time')
+
+        if (duration and (proposed_start_time or proposed_end_time)) or \
+                (not duration and (not proposed_start_time or not proposed_end_time)):
+            raise serializers.ValidationError('You should specify one of duration or time-range.',
+                                              code=status.HTTP_406_NOT_ACCEPTABLE)
+        if duration:
+            attrs['proposed_start_time'] = EARLIEST_MEETING_START
+            attrs['proposed_end_time'] = LATEST_MEETING_END
+        else:
+            base = datetime.today()
+            end = base.replace(hour=proposed_end_time.hour, minute=proposed_end_time.minute)
+            start = base.replace(hour=proposed_start_time.hour, minute=proposed_start_time.minute)
+            attrs['duration'] = int((end - start).total_seconds() / 60)
+
+        return attrs
+
 
 
 class RoomSerializer(serializers.ModelSerializer):

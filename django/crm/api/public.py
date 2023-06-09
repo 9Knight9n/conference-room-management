@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.core.exceptions import ValidationError
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -27,7 +28,7 @@ class MeetingView(APIView):
             stat, message = meeting.is_possible()
             if not stat:
                 meeting.delete()
-                return Response({'result': f'{message} Need confirmation!'}, status=status.HTTP_205_RESET_CONTENT)
+                return Response({'result': f'{message} Need confirmation!'}, status=status.HTTP_409_CONFLICT)
 
         meeting.save()
         return Response({'result': 'Meeting was added successfully. wait for manager acceptation.'},

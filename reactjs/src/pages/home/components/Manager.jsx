@@ -302,9 +302,7 @@ function Manager (props) {
         <>
             <div style={{display:"flex",justifyContent:"space-between"}}>
                 {addRoomInProcess?<Input onChange={(text)=>{setRoomName(text.target.value)}} placeholder="Room name" style={{ width: '55%' }}/>:""}
-                {/*{addRoomInProcess?<Divider dashed type="vertical" />:""}*/}
-                {addRoomInProcess?<InputNumber onChange={(text)=>{setRoomCapacity(text)}} placeholder="Room capacity" style={{ width: '20%' }}/>:""}
-                {/*{addRoomInProcess?<Divider dashed type="vertical" />:""}*/}
+                {addRoomInProcess?<Input onChange={(text)=>{setRoomCapacity(text.target.value)}} placeholder="Room capacity" style={{ width: '20%' }}/>:""}
                 <Button loading={addRoomLoading}
                         style={{width:addRoomInProcess?"20%":"100%",transition: 'width 1s ease-in-out', justifySelf:'end'}}
                         type="primary"

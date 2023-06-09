@@ -4,6 +4,7 @@ import Profile from "./components/Profile";
 import { Tabs } from 'antd';
 import Admin from "./components/Admin";
 import Manager from "./components/Manager";
+import Public from "./components/Public";
 
 
 function Home (props) {
@@ -24,7 +25,7 @@ function Home (props) {
         {
             key: '3',
             label: 'Public Panel',
-            children: <Manager token={props.token} notif={props.notif}/>,
+            children: <Public token={props.token} notif={props.notif}/>,
         },
     ];
 
