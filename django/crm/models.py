@@ -23,7 +23,7 @@ class Room(models.Model):
 
 class Meeting(models.Model):
     STATUS_CHOICES = (
-        ('P', 'pending acceptation'),
+        ('P', 'Pending acceptation'),
         ('A', 'Accepted'),
         ('R', 'Rejected'),
     )

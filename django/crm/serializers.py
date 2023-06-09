@@ -78,6 +78,10 @@ class AcceptMeetingSerializer(serializers.Serializer):
             raise serializers.ValidationError('Selected start and end time doesn\'t match proposed ones!',
                                               code=status.HTTP_406_NOT_ACCEPTABLE)
 
+        if meeting.proposed_date and not date == meeting.proposed_date:
+            raise serializers.ValidationError('Selected date doesn\'t match proposed one!',
+                                              code=status.HTTP_406_NOT_ACCEPTABLE)
+
         if meeting.number_of_participant > room.capacity:
             raise serializers.ValidationError('Selected room doesn\'t have enough capacity!',
                                               code=status.HTTP_406_NOT_ACCEPTABLE)
