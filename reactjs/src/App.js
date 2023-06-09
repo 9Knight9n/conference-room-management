@@ -18,6 +18,7 @@ function App() {
   const [token, setToken] = useState(null);
   const [id, setId] = useState(null);
   const [username, setUsername] = useState(null);
+  const [permission, setPermission] = useState(null);
   const [api, contextHolder] = notification.useNotification();
 
     // useEffect(() => {
@@ -49,10 +50,10 @@ function App() {
           <Routes>
               <Route index element={
                   <RequireAuth token={token}>
-                      <Home notif={api} token={token} id={id} username={username}/>
+                      <Home permission={permission} notif={api} token={token} id={id} username={username}/>
                   </RequireAuth>
               }/>
-              <Route path="/login" element={<Login notif={api}
+              <Route path="/login" element={<Login notif={api} setPermission={setPermission}
                   setUsername={setUsername} setToken={setToken}
                   setId={setId}/>}
               />

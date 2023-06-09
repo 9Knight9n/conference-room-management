@@ -37,6 +37,14 @@ function Login (props) {
                     props.setToken(temp.token)
                     props.setId(temp.id)
                     props.setUsername(temp.username)
+                    props.setPermission({
+                        'has_access_to_crm_panel':temp.has_access_to_crm_panel,
+                        'has_access_to_admin_panel':temp.has_access_to_admin_panel,
+                        'type':temp.has_access_to_admin_panel?
+                            "Administrator"
+                            :
+                            (temp.has_access_to_crm_panel?"Manager":"Basic"),
+                    })
                     navigate("/");
                 }
             }).catch(error => console.log('error', error));
