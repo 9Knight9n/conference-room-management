@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -17,9 +18,18 @@ class MeetingView(APIView):
         serializer.validated_data['user'] = User.objects.get(user=request.user)
         need_possibility_check = serializer.validated_data['possibility_check']
         del serializer.validated_data['possibility_check']
-        meeting = Meeting.objects.create(**serializer.validated_data)
-        if need_possibility_check == 'set' and not meeting.is_possible():
-            return Response({'result': 'Need confirmation!'}, status=status.HTTP_205_RESET_CONTENT)
+
+        try:
+            meeting = Meeting.objects.create(**serializer.validated_data)
+        except ValidationError as e:
+            return Response({'result': "".join(e.messages)}, status=status.HTTP_400_BAD_REQUEST)
+
+        if need_possibility_check == 'set':
+            stat, message = meeting.is_possible()
+            if not stat:
+                meeting.delete()
+                return Response({'result': f'{message} Need confirmation!'}, status=status.HTTP_205_RESET_CONTENT)
+
         meeting.save()
         return Response({'result': 'Meeting was successfully added. wait for manager acceptation.'},
                         status=status.HTTP_201_CREATED)

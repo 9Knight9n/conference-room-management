@@ -1,9 +1,10 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 import uuid
 from authentication.models import User
 from .config import MAX_NUMBER_OF_PARTICIPANT, MAX_MEETING_DURATION_IN_MINUTE, \
-    EARLIEST_MEETING_START, LATEST_MEETING_END
+    EARLIEST_MEETING_START, LATEST_MEETING_END, MIN_NUMBER_OF_PARTICIPANT, MIN_MEETING_DURATION_IN_MINUTE
 from datetime import datetime
 
 
@@ -31,7 +32,9 @@ class Meeting(models.Model):
     number_of_participant = models.PositiveIntegerField(
         null=False, blank=False,
         validators=[MaxValueValidator(MAX_NUMBER_OF_PARTICIPANT, f'Maximum number of participants is '
-                                                                 f'{MAX_NUMBER_OF_PARTICIPANT}.')]
+                                                                 f'{MAX_NUMBER_OF_PARTICIPANT}.'),
+                    MinValueValidator(MIN_NUMBER_OF_PARTICIPANT, f'Minimum number of participants is '
+                                                                 f'{MIN_NUMBER_OF_PARTICIPANT}.')]
     )
     status = models.CharField(choices=STATUS_CHOICES, max_length=1, default='P', null=False, blank=False)
     proposed_start_time = models.TimeField(
@@ -46,7 +49,9 @@ class Meeting(models.Model):
     duration = models.PositiveIntegerField(
         null=False, blank=False,
         validators=[MaxValueValidator(MAX_MEETING_DURATION_IN_MINUTE, f'Maximum meeting duration is '
-                                                                      f'{MAX_MEETING_DURATION_IN_MINUTE} minutes.')]
+                                                                      f'{MAX_MEETING_DURATION_IN_MINUTE} minutes.'),
+                    MinValueValidator(MIN_MEETING_DURATION_IN_MINUTE, f'Minimum meeting duration is '
+                                                                      f'{MIN_MEETING_DURATION_IN_MINUTE} minutes.')]
     )
     start_time = models.TimeField(
         null=True, blank=True,
@@ -65,13 +70,26 @@ class Meeting(models.Model):
     def __str__(self):
         return f'{self.title} ({self.status})'
 
+    def clean(self):
+        if ((self.start_time and self.end_time) and (self.start_time > self.end_time)) \
+                or self.proposed_start_time > self.proposed_end_time:
+            raise ValidationError('A meeting can\'t end before it starts!')
+        return super().clean()
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
+
     def is_possible(self):
         if not self.proposed_date:
-            return True
-        for room in Room.objects.all():
-            if room.capacity < self.number_of_participant:
-                continue
-            meetings = Meeting.objects.filter(status='A', date=self.proposed_date).order_by('start_time')
+            return True, "No conflict."
+
+        rooms = Room.objects.filter(capacity__gte=self.number_of_participant)
+        if not rooms.exists():
+            return False, "There is no room with required capacity!"
+
+        for room in rooms:
+            meetings = Meeting.objects.filter(date=self.proposed_date, status='A', room=room).order_by('start_time')
             for index in range(len(meetings) + 1):
                 if index == 0:
                     start = self.proposed_start_time
@@ -84,8 +102,12 @@ class Meeting(models.Model):
                     end = meetings[index].start_time
 
                 base = datetime.today()
+                end = min(end, self.proposed_end_time)
+                start = max(start, self.proposed_start_time)
                 end = base.replace(hour=end.hour, minute=end.minute)
                 start = base.replace(hour=start.hour, minute=start.minute)
+
                 if int((end - start).total_seconds() / 60) >= self.duration:
-                    return True
-        return False
+                    return True, "No conflict."
+
+        return False, "Conflict with already scheduled meetings!"
